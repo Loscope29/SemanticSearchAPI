@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
 # Create your views here.
 from rest_framework.views import APIView
@@ -8,8 +9,9 @@ from rest_framework.permissions import IsAuthenticated
 from pgvector.django import CosineDistance
 
 from documents.models import Document
-from documents.services import generate_embedding
+from documents.utils import generate_embedding
 from search.models import SearchQuery
+from search.serializers import SearchQuerySerializer
 
 
 class SemanticSearchAPIView(APIView):
