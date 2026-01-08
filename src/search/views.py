@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 
 from pgvector.django import CosineDistance
 
-from documents.models import Document, DocumentChunk
+from documents.models import DocumentChunk
 from documents.embeddings import generate_embedding
 from search.models import SearchQuery
 from search.serializers import SearchQuerySerializer
@@ -31,10 +31,7 @@ class SemanticSearchAPIView(APIView):
             .order_by("distance")[:5]
         )
         # Historique utilisateur
-        SearchQuery.objects.create(
-            user=request.user,
-            query=query_embedding
-        )
+        SearchQuery.objects.create(user=request.user, query=q)
 
         return Response([
             {
@@ -47,13 +44,16 @@ class SemanticSearchAPIView(APIView):
         ])
 
 
-class SearchHistoryAPIView(ListAPIView):
+class SearchHistoryAPIView(APIView):
     permission_classes = [IsAuthenticated]
-    serializer_class = SearchQuerySerializer
 
-    def get_queryset(self):
-        return (
-            SearchQuery.objects
-            .filter(user=self.request.user)
-            .order_by("-created_at")[:10]
-        )
+    def get(self, request):
+        history = SearchQuery.objects.filter(
+            user=request.user
+        ).order_by("-created_at")
+
+        return Response([
+            {"query": h.query, "date": h.created_at}
+            for h in history
+        ])
+

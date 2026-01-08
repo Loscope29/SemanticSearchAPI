@@ -7,6 +7,8 @@ def extract_text_from_pdf(file):
         text += page.get_text()
     return text
 
+def cleand_text(text):
+
 
 def chunk_text(text, chunk_size=500, overlap=50):
     words = text.split()

@@ -1,9 +1,9 @@
 from django.urls import path
 from rest_framework import routers
-from .views import DocumentViewSet
+from .views import PDFUploadAPIView, SimilarDocumentsAPIView
 
 router = routers.SimpleRouter()
-router.register("", DocumentViewSet, basename="documents")
+router.register("", PDFUploadAPIView, basename="documents")
 
 urlpatterns = [
     path("<int:id>/similar/", SimilarDocumentsAPIView.as_view()),
