@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework.generics import ListAPIView
 
 # Create your views here.
 from rest_framework.views import APIView
@@ -7,50 +8,45 @@ from rest_framework.permissions import IsAuthenticated
 
 from pgvector.django import CosineDistance
 
-from documents.models import Document
-from documents.services import generate_embedding
+from documents.models import Document, DocumentChunk
+from documents.embeddings import generate_embedding
 from search.models import SearchQuery
+from search.serializers import SearchQuerySerializer
 
 
 class SemanticSearchAPIView(APIView):
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
-        query = request.query_params.get("q")
-        if not query:
-            return Response(
-                {"error": "Le paramètre q est requis"},
-                status=400
-            )
+        q = request.query_params.get("q")
+        if not q:
+            return Response({"error": "q requis"}, status=400)
 
-        # Embedding de la requête
-        query_embedding = generate_embedding(query)
+        query_embedding = generate_embedding(q)
 
-        # Recherche vectorielle en base (pgvector)
-        documents = (
-            Document.objects
+        chunks = (
+            DocumentChunk.objects
             .annotate(
                 distance=CosineDistance("embedding", query_embedding)
             )
             .order_by("distance")[:5]
         )
-
         # Historique utilisateur
         SearchQuery.objects.create(
             user=request.user,
-            query=query
+            query=query_embedding
         )
 
-        # Réponse API
-        results = []
-        for doc in documents:
-            results.append({
-                "id": doc.id,
-                "title": doc.title,
-                "distance": float(doc.distance),
-            })
+        return Response([
+            {
+                "document": chunk.document.title,
+                "chunk_index": chunk.chunk_index,
+                "content": chunk.content[:200],
+                "distance": float(chunk.distance)
+            }
+            for chunk in chunks
+        ])
 
-        return Response(results, status=200)
 
 class SearchHistoryAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]

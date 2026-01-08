@@ -1,5 +1,6 @@
 from rest_framework import serializers
-from .models import SearchQuery
+from .models import
+
 
 class SearchQuerySerializer(serializers.ModelSerializer):
     class Meta:
