@@ -8,10 +8,10 @@ from rest_framework.permissions import IsAuthenticated
 
 from pgvector.django import CosineDistance
 
-from documents.models import Document
-from documents.utils import generate_embedding
-from search.models import SearchQuery
-from search.serializers import SearchQuerySerializer
+from src.documents.models import Document
+from src.documents.utils import generate_embedding
+from src.search.models import SearchQuery
+from src.search.serializers import SearchQuerySerializer
 
 
 class SemanticSearchAPIView(APIView):
