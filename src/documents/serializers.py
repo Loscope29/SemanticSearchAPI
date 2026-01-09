@@ -15,7 +15,7 @@ class DocumentUploadSerializer(serializers.ModelSerializer):
 
         raw_text = extract_text_from_pdf(pdf_file)
         cleaned_text = clean_text(raw_text)
-        chunks = chunk_text(clean_text)
+        chunks = chunk_text(cleaned_text)
 
         for idx, chunk in enumerate(chunks):
             DocumentChunk.objects.create(
