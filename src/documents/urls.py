@@ -1,6 +1,6 @@
 from django.urls import path
 from rest_framework import routers
-from .views import DocumentViewSet, SimilarDocumentViewSet
+from .views import DocumentViewSet
 
 router = routers.SimpleRouter()
 router.register("", DocumentViewSet, basename="documents")
