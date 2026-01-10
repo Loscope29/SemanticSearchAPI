@@ -1,7 +1,7 @@
 from pgvector.django import CosineDistance
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from .models import Document
@@ -10,6 +10,7 @@ from .serializers import DocumentSerializer
 class DocumentViewSet(ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
+    permission_classes = [AllowAny]
 
     @action(detail=True, methods=['get'], url_path='similar', permission_classes=[IsAuthenticated])
     def similar(self, request, pk=None):

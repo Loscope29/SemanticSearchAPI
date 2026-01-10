@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'src.config.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "semantic_db",
+        "NAME": "semantic_db_2",
         "USER": "postgres",
         "PASSWORD": "Azertya234@29",
         "HOST": "localhost",
