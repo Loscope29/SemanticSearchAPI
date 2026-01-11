@@ -1,7 +1,7 @@
 
 from pgvector.django import CosineDistance
 from rest_framework.parsers import MultiPartParser
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .models import Document, DocumentChunk
