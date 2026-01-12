@@ -27,8 +27,9 @@ urlpatterns = [
     path('api/rag/', include('src.rag.urls')),
     path('api/documents/', include('src.documents.urls')),
     path('api/search/', include('src.search.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/auth/register/', include('src.users.urls')),
+    path('api/auth/login/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/auth/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/docs/', SpectacularAPIView.as_view(), name='docs' ),
     path('api/schema/', SpectacularSwaggerView.as_view(), name='schema'),
 ]
