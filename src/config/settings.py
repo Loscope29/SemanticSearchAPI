@@ -159,7 +159,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Semantic Search API',
-    'DESCRIPTION': 'API de recherche sémantique basée sur des embeddings NLP',
+    'DESCRIPTION': 'API de recherche sémantique basée sur des embeddings NLP version multi format',
     'VERSION': '1.2',
     'SERVE_INCLUDE_SCHEMA': False,
 }
@@ -167,6 +167,7 @@ SPECTACULAR_SETTINGS = {
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 
