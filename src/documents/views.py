@@ -10,7 +10,7 @@ from .serializers import DocumentSerializer
 class DocumentViewSet(ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     @action(detail=True, methods=['get'], url_path='similar', permission_classes=[IsAuthenticated])
     def similar(self, request, pk=None):
