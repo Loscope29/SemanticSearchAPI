@@ -1,12 +1,12 @@
 import os
 
-from openai import OpenAI
+from google import genai
 from dotenv import load_dotenv
 
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-client = OpenAI(api_key=OPENAI_API_KEY)
+client = genai.Client(api_key='GEMINI_API_KEY')
 
 SYSTEM_PROMPT = """
 Tu es un assistant pédagogique.
@@ -25,13 +25,18 @@ QUESTION :
 {question}
 """
 
-    response = client.chat.completions.create(
-        model="gpt-4o-mini",
-        messages=[
+    response =  client.models.generate_content(
+    model='gemini-2.5-flash',
+    contents=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": prompt},
         ],
-        temperature=0.2
+        config={
+            'temperature': 0,
+            'top_p': 0.95,
+            'top_k': 20,
+            'max_token' : 2000,
+        }
     )
 
     return response.choices[0].message.content

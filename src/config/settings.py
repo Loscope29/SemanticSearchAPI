@@ -162,7 +162,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Semantic Search API',
-    'DESCRIPTION': 'API de recherche sémantique basée sur des embeddings NLP',
+    'DESCRIPTION': 'API de RAG permettant de dialoguer avec vos documents',
     'VERSION': '1.2',
     'SERVE_INCLUDE_SCHEMA': False,
 }
