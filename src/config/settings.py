@@ -161,13 +161,14 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'Semantic Search API',
-    'DESCRIPTION': 'API de recherche sémantique basée sur des embeddings de documents',
+    'DESCRIPTION': 'API de recherche sémantique basée sur des embeddings de documents PDF',
     'VERSION': '1.0.0',
     'SERVE_INCLUDE_SCHEMA': False,
 }
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(minutes=120),
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'AUTH_HEADER_TYPES': ('Bearer',),
 }
 
 
